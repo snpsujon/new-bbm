@@ -1,0 +1,1247 @@
+@model IEnumerable<CodeWeaverAccount.Areas.Merchandising.ViewModels.BudgetBillMatVM>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | FAQ</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/assets/plugins/fontawesome-free/css/all.min.css">
+
+
+    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/assets/dist/css/adminlte.min.css">
+
+
+    <link href="~/assets/mystyle.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+<body class="hold-transition sidebar-mini">
+
+
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+
+        <!-- Content Wrapper. Contains page content -->
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <section class="content">
+
+
+            <div class="row text-center">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Work Order No: @ViewBag.Workorder</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Budget No: @ViewBag.BudgetNo</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Budget Ammount: @ViewBag.TotalAmmount</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row">
+                <div class="col-12" id="accordion">
+
+                    <div class="card card-primary card-outline">
+                        <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                            <div class="card-header">
+                                <div class="tab">
+                                    <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Material List</button>
+                                    <button class="tablinks" onclick="openCity(event, 'Paris')">Other Expences</button>
+
+                                </div>
+
+                            </div>
+                        </a>
+                        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+
+
+                            <div id="London" class="tabcontent">
+                                <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Style</label>
+                                                        <input type="text" value="@ViewBag.Workorder" name="workorder" id="workorder" readonly hidden />
+                                                        <select class="form-control select2" style="width: 100%;" data-native-menu="false" id="Style" name="Style" asp-items="@(new SelectList(ViewBag.styles, "Value","Text"))">
+                                                            <option disabled selected="selected">Select One</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Material Catagory</label>
+                                                        <select class="form-control select2" style="width: 100%;" data-native-menu="false" id="MaterialCatagory" name="MaterialCatagory" asp-items="@(new SelectList(ViewBag.catagory, "Id","Catagory"))">
+                                                            <option disabled selected="selected">Select One</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-sm-10">
+                                                    <div class="form-group">
+                                                        <table id="materialtable" style="display:none">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        Option
+                                                                        <hr />
+                                                                    </th>
+                                                                    <th>
+                                                                        Value
+                                                                        <hr />
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+
+
+                                                        </table>
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Units</label>
+                                                        <select class="form-control select2" style="width: 100%;" id="Units" name="Units" asp-items="@(new SelectList(ViewBag.units, "Id","UnitName"))">
+                                                            <option disabled selected="selected">Select One</option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Parameter</label>
+                                                        <input type="text" class="form-control" id="Parameter" placeholder="Parameter" name="Parameter" onchange="total()">
+                                                        @*<select class="form-control select2" style="width: 100%;" id="Parameter" name="Parameter">
+                                                                <option disabled selected="selected">Select One</option>
+                                                                <option>Demo1</option>
+                                                                <option>Demo2</option>
+                                                                <option>Demo3</option>
+
+                                                            </select>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Consumtion</label>
+                                                        <input type="number" class="form-control" id="Consumtion" placeholder="Enter Consumtion" name="Consumtion" onchange="total()">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Wastage(%)</label>
+                                                        <input type="number" class="form-control" id="Wastage" placeholder="Enter Wastage" name="Wastage" onchange="total()">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Per Unit Price</label>
+                                                        <input type="number" class="form-control" id="perunitprice" placeholder="Enter per unit price" name="perunitprice" onchange="price()">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Total Quantity</label>
+                                                        <input type="number" class="form-control" id="totalquantity" placeholder="" readonly name="totalquantity" onchange="price()">
+                                                        <input type="text" class="form-control" id="total" onchange="total()" hidden>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Total Price</label>
+                                                        <input type="number" class="form-control" id="totalprice" placeholder="" readonly name="totalprice">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="col-sm-12">
+                                                <label for="exampleInputEmail1">Set Composition</label>
+                                                <div id=msg></div>
+
+                                                <div class="form-group">
+                                                    <form name=form1>
+                                                        <table class="table table-striped" id="mytable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">
+                                                                        <input type="checkbox" onClick="toggle(this); chkcontrol();" value="0" name="foo" onchange="total()" /><br />
+                                                                    </th>
+                                                                    <th scope="col">Inseam</th>
+                                                                    <th scope="col">GmtSize</th>
+                                                                    <th scope="col">Color</th>
+                                                                    <th scope="col">PO</th>
+                                                                    <th scope="col">Country</th>
+                                                                    <th scope="col">Quantity</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="sum">
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-info" id="getValBtnID1">Add</button>
+                                                <button class="btn btn-info" id="getValBtnID4">Edit</button>
+
+                                                @*<a href="#" class="btn btn-primary float-right" id="getValBtnID1">Submit</a>*@
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+                            <div id="Paris" class="tabcontent">
+                                <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Style</label>
+                                                        <select class="form-control select2" style="width: 100%;" data-native-menu="false" id="StyleS" name="StyleS" asp-items="@(new SelectList(ViewBag.styles, "Value","Text"))">
+                                                            <option disabled selected="selected">Select One</option>
+
+                                                        </select>
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Product Quantity</label>
+                                                        <input type="text" value="@ViewBag.Workorder" name="workorderO" id="workorderO" readonly hidden />
+                                                        <input type="text" class="form-control" id="ProductQuantity" placeholder="ProductQuantity" name="ProductQuantity" onchange="totalb()" readonly>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Total Price</label>
+                                                        <input type="number" class="form-control" id="totalpriceO" placeholder="" readonly name="totalpriceO">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Expence Catagory</label>
+                                                        <select class="form-control select2" style="width: 100%;" id="ExpenceCatagory" name="ExpenceCatagory" asp-items="@(new SelectList(ViewBag.expence, "Id","ExpensesName"))">
+                                                            <option disabled selected="selected">Select One</option>
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Unit Price</label>
+                                                        <input type="number" class="form-control" id="UnitPrice" placeholder="UnitPrice" name="UnitPrice" onchange="totalb()">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-sm-12">
+                                                    <label for="exampleInputEmail1">Set Composition</label>
+
+                                                    <div class="form-group">
+                                                        <table class="table table-striped" id="mytable1">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">
+                                                                        <input type="checkbox" onClick="toggle(this)"/><br />
+                                                                    </th>
+                                                                    <th scope="col">Inseam</th>
+                                                                    <th scope="col">GmtSize</th>
+                                                                    <th scope="col">Color</th>
+                                                                    <th scope="col">PO</th>
+                                                                    <th scope="col">Country</th>
+                                                                    <th scope="col">Quantity</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="sum">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>*@
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <button class="btn btn-info" id="getValBtnID2">Add</button>
+                                                @*<a href="#" class="btn btn-primary float-right" id="getValBtnID1">Submit</a>*@
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="card card-primary card-outline">
+                        <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                            <div class="card-header">
+                                <div class="tab">
+                                    <button class="tablinks" onclick="openCity1(event, 'London1')" id="defaultOpen">Material List</button>
+                                    <button class="tablinks" onclick="openCity1(event, 'Paris1')">Other Expences</button>
+
+                                </div>
+                            </div>
+                        </a>
+                        <div id="collapseTwo" class="collapse" data-parent="#accordion">
+
+                            <div id="London1" class="tabcontent">
+                                <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+                                <div class="card-body">
+                                    <h2> Material Details</h2>
+                                    <div>
+                                        <table class="table table-light table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Style Name</th>
+                                                    <th>Material</th>
+
+                                                    <th>Unit</th>
+                                                    <th>Consumption</th>
+                                                    <th>Wastage(%)</th>
+                                                    <th>Per Unit Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="partTable">
+                                                @foreach (var items in Model)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <input class="btn btn-link stitchdetails" type="button" value="@items.stylename" data-status="@items.style"
+                                                                   data-assigned-id="@items.style" data-toggle="modal" data-target="#myModal" data-assigned-matid="@items.MaterialId" />
+                                                        </td>
+
+                                                        <td>
+                                                            
+                                                            @Html.DisplayFor(modelItem => items.Materialname)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => items.Units)
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => items.consumtion)
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => items.wastage)
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => items.perunitprice)
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => items.totalquantity)
+
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => items.totalprice)
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                }
+                                            </tbody>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div id="Paris1" class="tabcontent">
+                                <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+                                <div class="card-body">
+                                    <h2> Other Expences</h2>
+                                    <div>
+                                        <table class="table table-light table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Style Name</th>
+                                                    <th>Expence Cat</th>
+                                                    <th>Product Quantity</th>
+                                                    <th>Unit</th>
+                                                    <th>Total Price</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="partTable1">
+                                            </tbody>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+
+    <script src="~/assets/plugins/jquery/jquery.min.js"></script>
+
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/assets/dist/js/adminlte.min.js"></script>
+
+
+    <script src="~/assets/plugins/select2/js/select2.full.min.js"></script>
+
+
+    <script src="~/assets/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+
+
+
+    <script>
+
+
+
+
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+
+
+        });
+        function toggle(source) {
+            checkboxes = document.getElementsByName('foo');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+
+
+
+
+    </script>
+
+
+
+
+    @section scripts
+{
+        <!-- jQuery -->
+        <script src="~/assets/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/assets/dist/js/adminlte.min.js"></script>
+
+
+        <!-- Select2 -->
+        <script src="~/assets/plugins/select2/js/select2.full.min.js"></script>
+
+
+        <script src="~/assets/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+
+        <script type="text/javascript">
+        $(function () {
+            $('.stitchdetails').click(function () {
+                var Styleid = $(this).data('assigned-id');
+                var matid = $(this).data('assigned-matid');
+
+                $("#sum").find("tr:not(:first)").remove();
+
+                console.log("StyleID", Styleid);
+                console.log("mat", matid);
+
+                if (Styleid != null &&
+                    Styleid != '') {
+                    /*getting inseam information*/
+                    $.getJSON('@Url.Action("GetInseam")', { StyleID: Styleid }, function (subheads) {
+                        if (subheads != null && !jQuery.isEmptyObject(subheads)) {
+
+
+
+
+
+
+
+                            $.getJSON('@Url.Action("setcom")', { StyleID: Styleid, MatID: matid}, function (sels) {
+                                if (sels != null && !jQuery.isEmptyObject(sels)) {
+                                    console.log("Return Value", subheads);
+                                    console.log("Return ss", sels);
+                                    $.each(subheads, function (index, subhead) {
+                                        var rowCount = $('.data-contact-person').length + 1;
+                                        var contactdiv = '<tr class="data-contact-person">'
+                                        $.each(sels, function (index, sel) {
+                                           
+                                            if (sel.setCompositionId == subhead.id) {
+                                                console.log("match");
+                                                +
+                                                    '<th scope="row"> <input id="checkStatus" type="checkbox" name="foo"  onclick="chkcontrol()" onchange="total()" value=' + subhead.quantity + ' checked> </th>'
+                                            }
+                                            else {
+                                                console.log("notmatch");+
+                                                    '<th scope="row"> <input id="checkStatus" type="checkbox" name="foo"  onclick="chkcontrol()" onchange="total()" value=' + subhead.quantity + '> </th>' 
+                                            }
+                                            
+                                                
+                                                
+                                        });
+                                        +'<td hidden>' + subhead.id + '</td>' +
+                                            '<td>' + subhead.inseam + '</td>' +
+                                            '<td>' + subhead.gmtSize + '</td>' +
+                                            '<td>' + subhead.color + '</td>' +
+                                            '<td>' + subhead.purchaseOrder + '</td>' +
+                                            '<td>' + subhead.country + '</td>' +
+                                            '<td class="totalquan"> ' + subhead.quantity + '</td>' +
+                                            '</tr>';
+                                        $('#sum').append(contactdiv); // Adding these controls to Main table class
+
+                                        //var rowCount = $('.data-contact-person').length + 1;
+                                        //var contactdiv = '<tr class="data-contact-person">' +
+                                        //    '<th scope="row"> <input id="checkStatus" type="checkbox" name="foo"  onclick="chkcontrol()" onchange="total()" value=' + subhead.quantity + '> </th>' +
+                                        //    '<td hidden>' + subhead.id + '</td>' +
+                                        //    '<td>' + subhead.inseam + '</td>' +
+                                        //    '<td>' + subhead.gmtSize + '</td>' +
+                                        //    '<td>' + subhead.color + '</td>' +
+                                        //    '<td>' + subhead.purchaseOrder + '</td>' +
+                                        //    '<td>' + subhead.country + '</td>' +
+                                        //    '<td class="totalquan"> ' + subhead.quantity + '</td>' +
+                                        //    '</tr>';
+                                        //$('#sum').append(contactdiv); 
+                                    });
+
+                                    /*$('#Units option[value=' + subheads.unitsId+']').prop('selected', true);*/
+
+                                    };
+                            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                        $.each(subheads, function (index, subhead) {
+                            var rowCount = $('.data-contact-person').length + 1;
+                            var contactdiv = '<tr class="data-contact-person">' +
+                                '<th scope="row"> <input id="checkStatus" type="checkbox" name="foo"  onclick="chkcontrol()" onchange="total()" value=' + subhead.quantity + '> </th>' +
+                                '<td hidden>' + subhead.id + '</td>' +
+                                '<td>' + subhead.inseam + '</td>' +
+                                '<td>' + subhead.gmtSize + '</td>' +
+                                '<td>' + subhead.color + '</td>' +
+                                '<td>' + subhead.purchaseOrder + '</td>' +
+                                '<td>' + subhead.country + '</td>' +
+                                '<td class="totalquan"> ' + subhead.quantity + '</td>' +
+                                '</tr>';
+                            $('#sum').append(contactdiv); // Adding these controls to Main table class
+                        });
+
+
+                        };
+                    });
+
+
+
+
+
+                    /*getting style information*/
+                    $.getJSON('@Url.Action("getdata")', { StyleID: Styleid, MatID: matid }, function (subheads) {
+                    if (subheads != null && !jQuery.isEmptyObject(subheads)) {
+
+                        console.log("Return style", subheads);
+                        console.log("Return para", subheads.parameter);
+
+                        var unit = $('#Units');
+                        unit.val(subheads.unitsId);
+
+
+                        $('#Parameter').val(subheads.parameter);
+                        $('#Consumtion').val(subheads.consumtion);
+                        $('#Wastage').val(subheads.wastage);
+                        $('#perunitprice').val(subheads.perunitprice);
+                        $('#totalquantity').val(subheads.totalquantity);
+                        $('#totalprice').val(subheads.totalprice);
+
+                        /*$('#Units option[value=' + subheads.unitsId+']').prop('selected', true);*/
+
+                        };
+                    });
+            }
+            });
+
+        });
+        </script>
+
+
+
+
+
+        <script type="text/javascript">
+
+
+            //for material list opening
+            document.getElementById("defaultOpen").click();
+            $(document).ready(function () {
+                //material list niche shoW korar jonno
+                $("#getValBtnID1").click(function () {
+
+                    var Style = $('select[name="Style"]').val();
+                    var stylename = document.querySelector('[value="' + Style + '"]').innerHTML;
+
+                    var MaterialCatagory = $('select[name="MaterialCatagory"]').val();
+                    var MaterialCatagoryName = document.querySelector('[value="' + MaterialCatagory + '"]').innerHTML;
+                    var Units = $('select[name="Units"]').val();
+                    var Parameter = $('input[name="Parameter"]').val();
+                    var consumtion = $('input[name="Consumtion"]').val();
+                    var Wastage = $('input[name="Wastage"]').val();
+                    var perunitprice = $('input[name="perunitprice"]').val();
+                    var totalquantity = $('input[name="totalquantity"]').val();
+                    var totalprice = $('input[name="totalprice"]').val();
+                    console.log(consumtion);
+                    console.log(stylename);
+                    var _tr = '<tr><td>' + stylename + '</td>   <td id="sum">' + MaterialCatagoryName + '</td>     <td>' + Units + '</td><td>' + consumtion + '</td><td>' + Wastage + '</td><td>' + perunitprice + '</td><td>' + totalquantity + '</td><td>' + totalprice + '</td> </tr>';
+                    $('#partTable').append(_tr);
+
+
+                });
+                //<td><div id="confirmationtab01" style="display:block">  <button class="btn btn-danger DeleteRowOfParticulars">Remove</buttton></div></td>
+
+
+                //$("body").on("click", ".DeleteRowOfParticulars", function () {
+                //    $(this).closest('tr').remove();
+
+                //});
+                //other expence niche sho korar jonno
+                $("#getValBtnID2").click(function () {
+
+                    var StyleS = $('select[name="StyleS"]').val();
+                    var styleSname = document.querySelector('[value="' + StyleS + '"]').innerHTML;
+                    var ExpenceCatagory = $('select[name="ExpenceCatagory"]').val();
+                    var ExpenceCatagoryName = document.querySelector('[value="' + ExpenceCatagory + '"]').innerHTML;
+                    var ProductQuantity = $('input[name="ProductQuantity"]').val();
+                    var totalpriceO = $('input[name="totalpriceO"]').val();
+                    var UnitPrice = $('input[name="UnitPrice"]').val();
+
+                    var _tr = '<tr><td>' + styleSname + '</td>   <td id="sum">' + ExpenceCatagoryName + '</td>     <td>' + ProductQuantity + '</td><td>' + UnitPrice + '</td><td>' + totalpriceO + '</td> </tr>';
+                    $('#partTable1').append(_tr);
+
+
+                });
+
+
+
+            });
+
+
+
+            //metarial list tab
+            function openCity(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+            //Other list tab
+            function openCity1(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+
+        </script>
+
+
+        <script type="text/javascript">
+
+            //inseam for material
+    $(document).ready(function () {
+        $('#Style').change(function () {
+            var Styleid = $("#Style").val();
+
+            $("#mytable").find("tr:not(:first)").remove();
+
+
+
+            console.log("txtAcc", Styleid);
+
+
+            if (Styleid != null &&
+                Styleid != '') {
+
+                $.getJSON('@Url.Action("GetInseam")', { StyleID: Styleid }, function (subheads) {
+                    if (subheads != null && !jQuery.isEmptyObject(subheads)) {
+
+                        console.log("Return Value", subheads);
+
+                        $.each(subheads, function (index, subhead) {
+                            var rowCount = $('.data-contact-person').length + 1;
+                            var contactdiv =
+
+                                '<tr class="data-contact-person">' +
+
+                                    '<th scope="row"> <input id="checkStatus" type="checkbox" name="foo"  onclick="chkcontrol()" onchange="total()" value=' + subhead.quantity +'> </th>' +
+                                    '<td hidden>' + subhead.id +'</td>'+
+                                    '<td>' + subhead.inseam +'</td>'+
+                                    '<td>' + subhead.gmtSize +'</td>'+
+                                    '<td>' + subhead.color +'</td>'+
+                                    '<td>' + subhead.purchaseOrder + '</td>'+
+                                    '<td>' + subhead.country +'</td>'+
+                                    '<td class="totalquan"> ' + subhead.quantity +'</td>'+
+                                '</tr>';
+
+
+                            $('#mytable').append(contactdiv); // Adding these controls to Main table class
+                        });
+                        };
+                    });
+
+
+
+
+
+            }
+        });
+    });
+
+
+        </script>
+
+
+
+        <script type="text/javascript">
+            //inseam for other expences
+    $(document).ready(function () {
+        $('#StyleS').change(function () {
+            var Styleid = $("#StyleS").val();
+
+            $("#mytable1").find("tr:not(:first)").remove();
+
+
+
+            console.log("txtAcc", Styleid);
+
+
+            if (Styleid != null &&
+                Styleid != '') {
+
+                $.getJSON('@Url.Action("GetInseam")', { StyleID: Styleid }, function (subheads) {
+
+                    if (subheads != null && !jQuery.isEmptyObject(subheads)) {
+
+
+                        //$("#ProductQuantity").val(a);
+
+
+                        console.log("Return Value", subheads);
+                        var sum = 0;
+
+
+                        $.each(subheads, function (index, subhead) {
+                            var rowCount = $('.data-contact-person').length + 1;
+                            var contactdiv = '<tr class="data-contact-person">' +
+                                '<th scope="row"> <input id="checkStatus" type="checkbox" name="foo1" id="Otherex" value=' + subhead.quantity + ' Checked> </th>' +
+                                '<from name="from2">' +
+                                '<td>' + subhead.inseam +'</td>'+
+                                '<td> ' + subhead.gmtSize +'</td>'+
+                                '<td> ' + subhead.color +'</td>'+
+                                '<td> ' + subhead.purchaseOrder + '</td>'+
+                                '<td> ' + subhead.country +'</td>'+
+                                '<td> ' + subhead.quantity +'</td>'+
+                                '</from>' +
+                                '</tr>';
+                            sum = sum + subhead.quantity;
+                            $('#mytable1').append(contactdiv); // Adding these controls to Main table class
+                        });
+                        $("#ProductQuantity").val(sum);
+                        console.log(sum);
+
+                        };
+                    });
+
+
+
+
+
+            }
+        });
+    });
+
+
+        </script>
+
+
+
+
+        <script type="text/javascript">
+            //material sub catagoris loading
+    $(document).ready(function () {
+        $('#MaterialCatagory').change(function () {
+            var MaterialID = $("#MaterialCatagory").val();
+
+            $("#materialtable").find("tr:not(:first)").remove();
+
+
+
+            /*console.log("txtAcc", MaterialID);*/
+
+
+            if (MaterialID != null &&
+                MaterialID != '') {
+
+                $.getJSON('@Url.Action("GetMaterialChar")', { MaterialID: MaterialID }, function (subheads) {
+                    if (subheads != null && !jQuery.isEmptyObject(subheads)) {
+
+                        $("#materialtable").css({ "display": "block" });
+
+                        console.log("Return Value", subheads);
+
+                        $.each(subheads, function (index, subhead) {
+                            var rowCount = $('.data-contact-person').length + 1;
+                            var contactdiv =
+                                '<tr class="data-contact-person">' +
+                                '<td hidden> ' + subhead.id + '</th>' +
+                                '<td scope="row"> ' + subhead.characterestic + '</th>' +
+                                '<td ><input type="text" class="form-control catagorydata"></td>' +
+                                '</tr>';
+                            $('#materialtable').append(contactdiv); // Adding these controls to Main table class
+                            //console.log(index);
+                            //console.log(subhead.characterestic);
+                        });
+                    }
+                    else {
+                        $("#materialtable").css({ "display": "none" });
+
+                    };
+                    });
+
+
+
+
+
+            }
+        });
+    });
+
+
+        </script>
+
+
+        <script type="text/javascript">
+            //for check the checkbox in inseam
+            function chkcontrol() {
+                var sum = 0;
+                check = 0;
+                uncheck = 0;
+                for (var i = 0; i < document.form1.foo.length; i++) {
+
+                    if (document.form1.foo[i].checked) {
+                        sum = sum + parseInt(document.form1.foo[i].value);
+                        check++;
+                    }
+                    else {
+                        uncheck++;
+                    }
+                    document.getElementById("msg").innerHTML = "Total Selected Quantity :" + sum;
+                    document.getElementById("total").value = sum;
+
+                }
+                console.log("Checked = " + check);
+                console.log("UnChecked = " + uncheck);
+
+
+            }
+
+        </script>
+        <script>
+            function total() {
+
+
+                var parameter = $('input[name="Parameter"]').val();
+                var consumtion = $('input[name="Consumtion"]').val();
+                var wastage = $('input[name="Wastage"]').val();
+                var sum = $('#total').val();
+
+                var totalQty = (((parseInt(sum) / parseInt(parameter)) * parseFloat(consumtion)) * (1 + (parseFloat(wastage) / 100))).toFixed(2);
+                document.getElementById("totalquantity").value = totalQty;
+
+                // check if the passed number is integer or float
+                //let regexPattern = /^-?[0-9]+$/;
+
+                //let result = regexPattern.test(totalQty);
+
+                //var totalQtyF = parseInt(totalQty) + 1;
+
+                //if (result) {
+                //    document.getElementById("totalquantity").value = totalQty;
+                //}
+                //else {
+                //    document.getElementById("totalquantity").value = totalQtyF;
+                //}
+
+                console.log(totalQty);
+            }
+            function price() {
+                var quantity = document.getElementById("totalquantity").value;
+                var price = document.getElementById("perunitprice").value;
+
+                var totalprice = parseFloat(quantity) * parseFloat(price);
+
+                document.getElementById("totalprice").value = totalprice;
+
+            }
+
+            $("#getValBtnID1").click(function () {
+
+                var mydata = {};
+
+                mydata.style = $('select[name="Style"]').val();
+                mydata.MaterialCatagory = $('select[name="MaterialCatagory"]').val();
+                mydata.Units = $('select[name="Units"]').val();
+                mydata.parameter = $('input[name="Parameter"]').val();
+                mydata.consumtion = $('input[name="Consumtion"]').val();
+                mydata.wastage = $('input[name="Wastage"]').val();
+                mydata.perunitprice = $('input[name="perunitprice"]').val();
+                mydata.totalprice = $('input[name="totalprice"]').val();
+                mydata.totalquantity = $('input[name="totalquantity"]').val();
+                mydata.workorder = $('input[name="workorder"]').val();
+
+
+
+                var SetComposition = new Array();
+                $("#mytable TBODY TR").each(function () {
+                    var row = $(this);
+                    var setcom = {};
+                    if (row.find('input[type="checkbox"]').prop("checked") == true) {
+                        setcom.SetCompositionId = row.find("TD").eq(0).html();
+                        setcom.inseam = row.find("TD").eq(1).html();
+                        setcom.gmtSize = row.find("TD").eq(2).html();
+                        setcom.color = row.find("TD").eq(3).html();
+                        setcom.purchaseOrder = row.find("TD").eq(4).html();
+                        setcom.country = row.find("TD").eq(5).html();
+                        setcom.quantity = row.find("TD").eq(6).html();
+                        SetComposition.push(setcom);
+                    }
+
+
+
+                });
+                mydata.setcom = SetComposition;
+
+                console.log(SetComposition);
+
+
+                //var SetComposition = [];
+                //var SetCompositionTable = document.getElementById('mytable');
+
+                //var rowLength = SetCompositionTable.rows.length;
+                ////console.log(mydata);
+
+                //console.log(rowLength);
+
+
+
+
+                //for (i = 0; i < rowLength; i++) {
+                //    var SetCompositionCell = SetCompositionTable.rows.item(i).cells;
+                //    var setcom = {};
+
+
+                //    if (document.form1.foo[i].checked) {
+                //        /*setcom.SetCompositionId = SetCompositionCell.item(1).innerHTML;*/
+                //        setcom.inseam = SetCompositionCell.item(2).innerHTML;
+                //        setcom.gmtSize = SetCompositionCell.item(3).innerHTML;
+                //        setcom.color = SetCompositionCell.item(4).innerHTML;
+                //        setcom.purchaseOrder = SetCompositionCell.item(5).innerHTML;
+                //        setcom.country = SetCompositionCell.item(6).innerHTML;
+                //        setcom.quantity = SetCompositionCell.item(7).innerHTML;
+
+                //        SetComposition.push(setcom);
+                //    }
+
+
+
+                //}
+                //mydata.setcom = SetComposition;
+
+                console.log(mydata);
+
+                var materialtable = document.getElementById('materialtable');
+
+                var rowLengthmaterialtable = materialtable.rows.length;
+                if (rowLengthmaterialtable > 1) {
+                    var CatagoryField = new Array();
+                    $("#materialtable TBODY TR").each(function () {
+                        var row = $(this);
+                        var catagoryFeildDataVMs = {};
+                        catagoryFeildDataVMs.inventoryCatagoryFeildId = row.find("TD").eq(0).html();
+                        catagoryFeildDataVMs.fieldData = row.find('.catagorydata').val();
+                        CatagoryField.push(catagoryFeildDataVMs);
+
+                    });
+                    mydata.catagoryFeildDataVMs = CatagoryField;
+                }
+
+
+
+
+
+
+
+
+                console.log(mydata);
+                $.ajax({
+                    url: "/Merchandising/Budgetbillnew/Create",
+                    type: "POST",
+                    data: { data: mydata },
+                    success: function (mydata) {
+                        if (mydata == 1) {
+                            alert("Data has been saved");
+                        }
+                        else {
+                            alert("Data has been  not saved");
+                        }
+
+                        // windo.location.href = '/Merchandising/Budgetbillnew/Create';
+                    },
+                    //error: function (error) {
+                    //    alert('Failed');
+                    //    alert(error);
+                    //}
+                });
+
+            });
+        </script>
+        <script>
+            function totalb() {
+                var quantity = document.getElementById("ProductQuantity").value;
+                var unitprice = document.getElementById("UnitPrice").value;
+
+                var total = parseFloat(quantity) * parseFloat(unitprice);
+                document.getElementById("totalpriceO").value = total;
+            }
+            $("#getValBtnID2").click(function () {
+
+                var mydata = {};
+
+                mydata.style = $('select[name="StyleS"]').val();
+                mydata.productquantity = $('input[name="ProductQuantity"]').val();
+                mydata.expenceCatagory = $('select[name="ExpenceCatagory"]').val();
+                mydata.totalpriceO = $('input[name="totalpriceO"]').val();
+                mydata.unitPrice = $('input[name="UnitPrice"]').val();
+                mydata.workorder = $('input[name="workorderO"]').val();
+
+                console.log(mydata);
+                $.ajax({
+                    url: "/Merchandising/Budgetbillnew/OtherExpenceCreate",
+                    type: "POST",
+                    data: { data: mydata },
+                    success: function (mydata) {
+                        if (mydata == 1) {
+                            alert("Data has been saved");
+                        }
+                        else {
+                            alert("Data has been  not saved");
+                        }
+
+                        // windo.location.href = '/Merchandising/Budgetbillnew/Create';
+                    },
+                    //error: function (error) {
+                    //    alert('Failed');
+                    //    alert(error);
+                    //}
+                });
+
+
+
+
+
+
+            });
+
+
+
+        </script>
+
+
+
+
+
+
+
+    }
+
+
+
+</body>
+</html>
